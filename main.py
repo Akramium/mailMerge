@@ -1,8 +1,13 @@
-with open("./Input/Names/invited_names.txt") as names:
-    names_list = names.readlines()
-    with open("./Input/Letters/starting_letter.txt") as letter:
-        start_letter = letter.read()
-        for name in names_list:
-            with open(f"./Output/ReadyToSend/letter_for_{name}".strip("\n") + ".txt", mode="w") as letter_to_send:
-                relace_name = start_letter.replace("[name]", name.strip("\n"))
-                letter_to_send.write(relace_name)
+PLACEHOLDER = "[name]"
+
+
+with open("./Input/Names/invited_names.txt") as names_file:
+    names = names_file.readlines()
+
+with open("./Input/Letters/starting_letter.txt") as letter_file:
+    letter_contents = letter_file.read()
+    for name in names:
+        stripped_name = name.strip()
+        new_letter = letter_contents.replace(PLACEHOLDER, stripped_name)
+        with open(f"./Output/ReadyToSend/letter_for_{stripped_name}.txt", mode="w") as completed_letter:
+            completed_letter.write(new_letter)
